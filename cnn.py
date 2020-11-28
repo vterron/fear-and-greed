@@ -66,8 +66,11 @@ def _parse_date(d: str) -> datetime.datetime:
     return date
 
 
-def get(fetcher) -> FearGreedIndex:
+def get(fetcher=None) -> FearGreedIndex:
     """Returns CNN's Fear & Greed Index."""
+
+    if fetcher is None:
+        fetcher = Fetcher()
 
     match = re.search(REGEXP, fetcher())
     if match:

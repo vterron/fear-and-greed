@@ -118,7 +118,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
     @freezegun.freeze_time("2020-11-28")
     def test_get(self, html, want):
         fake_fetcher = lambda: html
-        got = cnn.get(fake_fetcher)
+        got = cnn.get(fetcher=fake_fetcher)
         self.assertEqual(got, want)
 
 
