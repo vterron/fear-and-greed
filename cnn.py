@@ -2,6 +2,7 @@
 
 import collections
 import datetime
+import pytz
 import re
 import requests
 
@@ -32,9 +33,11 @@ def _parse_date(d):
     # we parse "Dec 31 at 3:00pm" on January 1st) we need to subtract one year: the
     # Fear & Greed index value cannot have been generated in the future, after all.
 
-    now = datetime.datetime.now()
-    # TODO(vterron): include timezone.
+    # From CNN's website: "All times are ET."
+    eastern = pytz.timezone("US/Eastern")
+    now = datetime.datetime.now(tz=eastern)
     date = datetime.datetime.strptime(d, "%b %d at %I:%M%p").replace(year=now.year)
+    date = date.replace(tzinfo=eastern)
     if date > now:
         date = date.replace(year=now.year - 1)
     return date

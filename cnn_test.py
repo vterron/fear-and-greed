@@ -3,6 +3,7 @@
 import cnn
 
 import datetime
+import pytz
 import unittest.mock
 import freezegun
 
@@ -29,6 +30,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
                     day=28,
                     hour=5,
                     minute=6,
+                    tzinfo=pytz.timezone("US/Eastern"),
                 ),
             ),
         },
@@ -44,6 +46,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
                     day=13,
                     hour=17,
                     minute=14,
+                    tzinfo=pytz.timezone("US/Eastern"),
                 ),
             ),
         },
@@ -59,6 +62,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
                     day=19,
                     hour=18,
                     minute=30,
+                    tzinfo=pytz.timezone("US/Eastern"),
                 ),
             ),
         },
@@ -74,6 +78,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
                     day=15,
                     hour=17,
                     minute=19,
+                    tzinfo=pytz.timezone("US/Eastern"),
                 ),
             ),
         },
@@ -89,6 +94,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
                     day=27,
                     hour=17,
                     minute=0,
+                    tzinfo=pytz.timezone("US/Eastern"),
                 ),
             ),
         },
@@ -104,6 +110,7 @@ class FetchFearGreedIndexTest(parameterized.TestCase):
                     day=31,
                     hour=16,
                     minute=59,
+                    tzinfo=pytz.timezone("US/Eastern"),
                 ),
             ),
         },
