@@ -15,14 +15,22 @@ REGEXP = "Greed Now: (?P<value>\d+) \((?P<description>.*?)\).*Last updated (?P<d
 FearGreedIndex = collections.namedtuple("FearGreedIndex", "value, description, date")
 
 
-def fetch():
-    """Fetches the Fear & Greed Index from CNN's website."""
+class Fetcher:
+    """Fetcher gets the HTML contents of CNN's Fear & Greed Index website."""
 
-    r = requests.get(URL)
-    group = re.search(REGEXP, r.text).group
+    def __call__(self):
+        r = requests.get(URL)
+        return r.text
+
+
+def get(fetcher):
+    """Returns CNN's Fear & Greed Index."""
+
+    group = re.search(REGEXP, fetcher()).group
     # TODO(vterron): parse the date to a timestamp.
     return FearGreedIndex(int(group("value")), group("description"), group("date"))
 
 
 if __name__ == "__main__":
-    print(fetch())
+    fetcher = Fetcher()
+    print(get(fetcher))
