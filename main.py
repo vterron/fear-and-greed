@@ -23,7 +23,7 @@ class DateTimeEncoder(json.JSONEncoder):
 
 
 @app.route("/")
-def get_fear_greed_çindex():
+def get_fear_greed_index():
     index = cnn.get()
     return flask.Response(
         json.dumps(index._asdict(), cls=DateTimeEncoder),
