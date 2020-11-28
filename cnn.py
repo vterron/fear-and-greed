@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import collections
+import datetime
 import re
 import requests
 
@@ -23,12 +24,29 @@ class Fetcher:
         return r.text
 
 
+def _parse_date(d):
+    """Parses e.g. 'Nov 27 at 5:00pm' into a datetime object."""
+
+    # The string timestamp doesn't include the year, assumed to be the current one.
+    # If the resulting datetime object refers to a point in time in the future (e.g.
+    # we parse "Dec 31 at 3:00pm" on January 1st) we need to subtract one year: the
+    # Fear & Greed index value cannot have been generated in the future, after all.
+
+    now = datetime.datetime.now()
+    # TODO(vterron): include timezone.
+    date = datetime.datetime.strptime(d, "%b %d at %I:%M%p").replace(year=now.year)
+    if date > now:
+        date = date.replace(year=now.year - 1)
+    return date
+
+
 def get(fetcher):
     """Returns CNN's Fear & Greed Index."""
 
     group = re.search(REGEXP, fetcher()).group
-    # TODO(vterron): parse the date to a timestamp.
-    return FearGreedIndex(int(group("value")), group("description"), group("date"))
+    return FearGreedIndex(
+        int(group("value")), group("description"), _parse_date(group("date"))
+    )
 
 
 if __name__ == "__main__":
