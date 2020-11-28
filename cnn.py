@@ -12,7 +12,6 @@ URL = "https://money.cnn.com/data/fear-and-greed/"
 REGEXP = "Greed Now: (?P<value>\d+) \((?P<description>.*?)\).*Last updated (?P<date>.*?(?:am|pm))"
 
 # TODO(vterron): use requests-cache.
-# TODO(vterron): add type annotations.
 
 
 class FearGreedIndex(typing.NamedTuple):
@@ -24,12 +23,12 @@ class FearGreedIndex(typing.NamedTuple):
 class Fetcher:
     """Fetcher gets the HTML contents of CNN's Fear & Greed Index website."""
 
-    def __call__(self):
+    def __call__(self) -> str:
         r = requests.get(URL)
         return r.text
 
 
-def _parse_date(d):
+def _parse_date(d: str) -> datetime.datetime:
     """Parses e.g. 'Nov 27 at 5:00pm' into a datetime object."""
 
     # The string timestamp doesn't include the year, assumed to be the current one.
@@ -47,13 +46,16 @@ def _parse_date(d):
     return date
 
 
-def get(fetcher):
+def get(fetcher) -> FearGreedIndex:
     """Returns CNN's Fear & Greed Index."""
 
-    group = re.search(REGEXP, fetcher()).group
-    return FearGreedIndex(
-        int(group("value")), group("description"), _parse_date(group("date"))
-    )
+    match = re.search(REGEXP, fetcher())
+    if match:
+        group = match.group
+        return FearGreedIndex(
+            int(group("value")), group("description"), _parse_date(group("date"))
+        )
+    raise ValueError("couldn't parse {}".format(URL))
 
 
 if __name__ == "__main__":
