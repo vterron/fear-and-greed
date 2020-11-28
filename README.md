@@ -7,7 +7,7 @@ https://greed.vterron.xyz
 
 Both URLs resolve to the same endpoint.
 
-Sample usage:
+# Sample usage
 
 ```
 $ curl fear.vterron.xyz
