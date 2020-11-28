@@ -24,11 +24,11 @@ except ImportError:
 URL = "https://money.cnn.com/data/fear-and-greed/"
 REGEXP = re.compile(
     """
-    Greed\ Now:\ (?P<value>\d+)            # the index value, [0-100].
+    Greed\ Now:\ (?P<value>\d+)                       # the index value, [0-100].
     \s
-    \((?P<description>.*?)\)               # e.g. "Neutral", non-greedy.
-    .*                                     # ignore in-between HTML code.
-    Last\ updated\ (?P<date>.*?(?:am|pm))  # e.g. "Nov 27 at 5:00pm"
+    \((?P<description>.*?)\)                          # e.g. "Neutral", non-greedy.
+    .*                                                # ignore in-between HTML code.
+    Last\ updated\ (?P<last_update>.*?(?:am|pm))  # e.g. "Nov 27 at 5:00pm"
 """,
     re.VERBOSE,
 )
@@ -37,7 +37,7 @@ REGEXP = re.compile(
 class FearGreedIndex(typing.NamedTuple):
     value: int
     description: str
-    date: datetime.datetime
+    last_update: datetime.datetime
 
 
 class Fetcher:
@@ -76,7 +76,9 @@ def get(fetcher=None) -> FearGreedIndex:
     if match:
         group = match.group
         return FearGreedIndex(
-            int(group("value")), group("description"), _parse_date(group("date"))
+            int(group("value")),
+            group("description"),
+            _parse_date(group("last_update")),
         )
     raise ValueError("couldn't parse {}".format(URL))
 
