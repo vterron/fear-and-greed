@@ -22,8 +22,16 @@ except ImportError:
     logging.warning("couldn't import 'requests-cache', requests won't be cached.")
 
 URL = "https://money.cnn.com/data/fear-and-greed/"
-# TODO(vterron): document this regexp with inline comments.
-REGEXP = "Greed Now: (?P<value>\d+) \((?P<description>.*?)\).*Last updated (?P<date>.*?(?:am|pm))"
+REGEXP = re.compile(
+    """
+    Greed\ Now:\ (?P<value>\d+)            # the index value, [0-100].
+    \s
+    \((?P<description>.*?)\)               # e.g. "Neutral", non-greedy.
+    .*                                     # ignore in-between HTML code.
+    Last\ updated\ (?P<date>.*?(?:am|pm))  # e.g. "Nov 27 at 5:00pm"
+""",
+    re.VERBOSE,
+)
 
 
 class FearGreedIndex(typing.NamedTuple):
