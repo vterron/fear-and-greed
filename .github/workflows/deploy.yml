@@ -7,6 +7,9 @@ jobs:
     name: Deploy app to Google App Engine
     runs-on: ubuntu-latest
     steps:
+      - name: Git repository checkout
+        uses: actions/checkout@v2
+
       - name: Setup Cloud SDK
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
