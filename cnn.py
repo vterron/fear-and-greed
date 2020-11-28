@@ -5,6 +5,7 @@ import datetime
 import pytz
 import re
 import requests
+import typing
 
 URL = "https://money.cnn.com/data/fear-and-greed/"
 # TODO(vterron): document this regexp with inline comments.
@@ -13,8 +14,11 @@ REGEXP = "Greed Now: (?P<value>\d+) \((?P<description>.*?)\).*Last updated (?P<d
 # TODO(vterron): use requests-cache.
 # TODO(vterron): add type annotations.
 
-# TODO(vterron): use typed namedtuple instead.
-FearGreedIndex = collections.namedtuple("FearGreedIndex", "value, description, date")
+
+class FearGreedIndex(typing.NamedTuple):
+    value: int
+    description: str
+    date: datetime.datetime
 
 
 class Fetcher:
