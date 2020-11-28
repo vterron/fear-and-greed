@@ -2,16 +2,28 @@
 
 import collections
 import datetime
+import logging
+import os.path
 import pytz
 import re
 import requests
+import tempfile
 import typing
+
+try:
+    import requests_cache
+
+    requests_cache.install_cache(
+        cache_name=os.path.join(tempfile.gettempdir(), "cnn_cache"),
+        expire_after=datetime.timedelta(minutes=10),
+    )
+
+except ImportError:
+    logging.warning("couldn't import 'requests-cache', requests won't be cached.")
 
 URL = "https://money.cnn.com/data/fear-and-greed/"
 # TODO(vterron): document this regexp with inline comments.
 REGEXP = "Greed Now: (?P<value>\d+) \((?P<description>.*?)\).*Last updated (?P<date>.*?(?:am|pm))"
-
-# TODO(vterron): use requests-cache.
 
 
 class FearGreedIndex(typing.NamedTuple):
