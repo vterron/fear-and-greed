@@ -10,14 +10,13 @@ jobs:
       - name: Git repository checkout
         uses: actions/checkout@v2
 
-      - name: Setup Cloud SDK
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
         with:
           service_account_key: ${{ secrets.GAE_SA_KEY }}
-          project_id: ${{ secrets.GAE_PROJECT }}
           export_default_credentials: true
 
       - name: Deploy to Google App Engine
-        run: |-
-          # --quiet to skip confirmation prompt.
-          gcloud --quiet app deploy
+        uses: google-github-actions/deploy-appengine@main
+        with:
+          project_id: ${{ secrets.GAE_PROJECT }}
