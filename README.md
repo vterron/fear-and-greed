@@ -1,19 +1,16 @@
 RESTful API to access CNN's [Fear & Greed Index](https://money.cnn.com/data/fear-and-greed/).
 
-# URL(s):
+# URL
 
-- https://fear.vterron.xyz
-- https://greed.vterron.xyz
-
-Both URLs resolve to the same endpoint.
+https://fear-and-greed.vterron.xyz
 
 # Sample usage
 
 ```
-$ curl fear.vterron.xyz
+$ curl fear-and-greed.vterron.xyz
 {"value": 92, "description": "Extreme Greed", "last_update": "2020-11-27T17:00:00-04:56"}
 
-$ curl --silent greed.vterron.xyz | jq '.value'
+$ curl --silent fear-and-greed.vterron.xyz | jq '.value'
 92
 ```
 
