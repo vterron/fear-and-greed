@@ -14,4 +14,4 @@ $ curl --silent fear-and-greed.vterron.xyz | jq '.value'
 92
 ```
 
-This wouldn't have been necessary if CNN provided historical data.
+This wouldn't have been necessary if CNN had provided historical data.
