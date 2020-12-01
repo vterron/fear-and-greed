@@ -15,7 +15,7 @@ try:
 
     requests_cache.install_cache(
         cache_name=os.path.join(tempfile.gettempdir(), "cnn_cache"),
-        expire_after=datetime.timedelta(minutes=10),
+        expire_after=datetime.timedelta(minutes=1),
     )
 
 except ImportError:
