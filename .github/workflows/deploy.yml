@@ -1,4 +1,4 @@
-name: Deploy github.com/vterron/fear-and-greed to Google App Engine
+name: Deploy to Google App Engine
 
 on: [push]
 
