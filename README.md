@@ -15,3 +15,5 @@ $ curl --silent fear-and-greed.vterron.xyz | jq '.value'
 ```
 
 This wouldn't have been necessary if CNN had provided historical data.
+
+TODO(vterron): package this and publish it on PyPI.
