@@ -9,4 +9,4 @@ test:
 local:
 	sam build && sam local invoke
 deploy:
-	sam deploy
+	sam build && sam deploy
