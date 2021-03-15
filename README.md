@@ -7,10 +7,10 @@ https://fear-and-greed.vterron.xyz
 # Sample usage
 
 ```
-$ curl fear-and-greed.vterron.xyz
+$ curl https://fear-and-greed.vterron.xyz
 {"value": 92, "description": "Extreme Greed", "last_update": "2020-11-27T17:00:00-04:56"}
 
-$ curl --silent fear-and-greed.vterron.xyz | jq '.value'
+$ curl --silent https://fear-and-greed.vterron.xyz | jq '.value'
 92
 ```
 
