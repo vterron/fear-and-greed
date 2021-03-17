@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import cnn
+from fear_and_greed import cnn
 
 import datetime
 import pytz

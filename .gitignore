@@ -1,2 +1,5 @@
-.aws-sam/
+*.egg-info/
 *~
+.tox/
+build/
+dist/

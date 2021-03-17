@@ -1,12 +1,16 @@
 SHELL := /bin/bash
 
-.PHONY: all
+.PHONY: all test build clean push
 
 all: test
 
 test:
-	pytest --pyargs fear_and_greed -v
-local:
-	sam build && sam local invoke
-deploy:
-	sam build && sam deploy
+	tox
+build:
+	python3 -m build
+
+clean:
+	rm dist/ build/ -rfv
+
+push:
+	python3 -m twine upload --skip-existing --repository testpypi dist/*

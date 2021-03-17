@@ -1,19 +1,29 @@
-RESTful API to access CNN's [Fear & Greed Index](https://money.cnn.com/data/fear-and-greed/).
+Python wrapper for CNN's [Fear & Greed Index](https://money.cnn.com/data/fear-and-greed/).
 
-# URL
+Fetches CNN's website, parses the index value and returns the data as a three-element tuple.
 
-https://fear-and-greed.vterron.xyz
+# Installation
 
-# Sample usage
-
-```
-$ curl https://fear-and-greed.vterron.xyz
-{"value": 92, "description": "Extreme Greed", "last_update": "2020-11-27T17:00:00-04:56"}
-
-$ curl --silent https://fear-and-greed.vterron.xyz | jq '.value'
-92
+```bash
+pip install fear-and-greed
 ```
 
-This wouldn't have been necessary if CNN had provided historical data.
+# Usage example
 
-TODO(vterron): package this and publish it on PyPI.
+```python
+import fear_and_greed
+
+fear_and_greed.get()
+```
+
+Returns a three-element namedtuple with (a) the current value of the Fear & Greed Index, (b) a description of the category into which the index value falls (from "Extreme Fear" to "Extreme Greed") and (c) the timestamp at which the index value was last updated on CNN's website. Example:
+
+```python
+FearGreedIndex(
+    value=58,
+    description='Greed',
+    last_update=datetime.datetime(2020, 3, 18, 14, 11, tzinfo=<DstTzInfo 'US/Eastern' LMT-1 day, 19:04:00 STD>)),
+ )
+```
+
+Requests to CNN's website are locally [cached](https://pypi.org/project/requests-cache/) for 1m.

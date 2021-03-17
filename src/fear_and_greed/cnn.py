@@ -81,8 +81,3 @@ def get(fetcher=None) -> FearGreedIndex:
             _parse_date(group("last_update")),
         )
     raise ValueError("couldn't parse {}".format(URL))
-
-
-if __name__ == "__main__":
-    fetcher = Fetcher()
-    print(get(fetcher))
