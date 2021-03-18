@@ -7,19 +7,16 @@ import os.path
 import pytz
 import re
 import requests
+import requests_cache
 import tempfile
 import typing
 
-try:
-    import requests_cache
 
-    requests_cache.install_cache(
-        cache_name=os.path.join(tempfile.gettempdir(), "cnn_cache"),
-        expire_after=datetime.timedelta(minutes=1),
-    )
+requests_cache.install_cache(
+    cache_name=os.path.join(tempfile.gettempdir(), "cnn_cache"),
+    expire_after=datetime.timedelta(minutes=1),
+)
 
-except ImportError:
-    logging.warning("couldn't import 'requests-cache', requests won't be cached.")
 
 URL = "https://money.cnn.com/data/fear-and-greed/"
 REGEXP = re.compile(
