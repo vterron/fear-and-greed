@@ -29,4 +29,5 @@ FearGreedIndex(
 Requests to CNN's website are locally [cached](https://pypi.org/project/requests-cache/) for 1m.
 
 [![Test workflow](https://github.com/vterron/fear-and-greed/actions/workflows/test.yml/badge.svg)](https://github.com/vterron/fear-and-greed/actions/workflows/test.yml)
+[![PyPI badge](https://img.shields.io/pypi/v/fear-and-greed?color=blue)](https://pypi.org/project/fear-and-greed/)
 [![Black badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
