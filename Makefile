@@ -13,4 +13,4 @@ clean:
 	rm dist/ build/ -rfv
 
 push:
-	python3 -m twine upload --skip-existing dist/*
+	python3 -m twine upload --repository fear-and-greed --skip-existing dist/*
