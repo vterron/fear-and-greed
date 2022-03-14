@@ -4,13 +4,13 @@ import collections
 import datetime
 import logging
 import os.path
-import pytz
 import re
-import requests
-import requests_cache
 import tempfile
 import typing
 
+import pytz
+import requests
+import requests_cache
 
 requests_cache.install_cache(
     cache_name=os.path.join(tempfile.gettempdir(), "cnn_cache"),

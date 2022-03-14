@@ -1,14 +1,17 @@
 #! /usr/bin/env python3
 
-from fear_and_greed import cnn
-
 import datetime
-import pytz
 import unittest.mock
-import freezegun
 
-from absl.testing import absltest
-from absl.testing import parameterized
+import freezegun
+import pytz
+from absl.testing import (
+    absltest,
+    parameterized
+)
+from fear_and_greed import (
+    cnn
+)
 
 # Template for the HTML code used in the unit tests.
 html = """<ul><li>Fear &amp; Greed Now: {} ({})</li>....<div id="needleAsOfDate">Last updated {}</div>""".format
