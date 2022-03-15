@@ -5,13 +5,8 @@ import unittest.mock
 import zoneinfo
 
 import freezegun
-from absl.testing import (
-    absltest,
-    parameterized
-)
-from fear_and_greed import (
-    cnn
-)
+from absl.testing import absltest, parameterized
+from fear_and_greed import cnn
 
 # Template for the HTML code used in the unit tests.
 html = """<ul><li>Fear &amp; Greed Now: {} ({})</li>....<div id="needleAsOfDate">Last updated {}</div>""".format
