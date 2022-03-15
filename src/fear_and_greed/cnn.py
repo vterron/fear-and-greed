@@ -7,8 +7,8 @@ import os.path
 import re
 import tempfile
 import typing
+import zoneinfo
 
-import pytz
 import requests
 import requests_cache
 
@@ -54,7 +54,7 @@ def _parse_date(d: str) -> datetime.datetime:
     # Fear & Greed index value cannot have been generated in the future, after all.
 
     # From CNN's website: "All times are ET."
-    eastern = pytz.timezone("US/Eastern")
+    eastern = zoneinfo.ZoneInfo("US/Eastern")
     now = datetime.datetime.now(tz=eastern)
     date = datetime.datetime.strptime(d, "%b %d at %I:%M%p").replace(year=now.year)
     date = date.replace(tzinfo=eastern)
