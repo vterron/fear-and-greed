@@ -1,8 +1,11 @@
 SHELL := /bin/bash
 
-.PHONY: all test build clean push
+.PHONY: all black test build clean push
 
 all: test
+
+black:
+	black .
 
 test:
 	tox
