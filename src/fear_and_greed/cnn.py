@@ -1,13 +1,9 @@
 #! /usr/bin/env python3
 
-import collections
 import datetime
-import logging
 import os.path
-import re
 import tempfile
 import typing
-import zoneinfo
 
 import requests
 import requests_cache
@@ -17,22 +13,11 @@ requests_cache.install_cache(
     expire_after=datetime.timedelta(minutes=1),
 )
 
-
-URL = "https://money.cnn.com/data/fear-and-greed/"
-REGEXP = re.compile(
-    """
-    Greed\ Now:\ (?P<value>\d+)                       # the index value, [0-100].
-    \s
-    \((?P<description>.*?)\)                          # e.g. "Neutral", non-greedy.
-    .*                                                # ignore in-between HTML code.
-    Last\ updated\ (?P<last_update>.*?(?:am|pm))  # e.g. "Nov 27 at 5:00pm"
-""",
-    re.VERBOSE,
-)
+URL = "https://production.dataviz.cnn.io/index/fearandgreed/graphdata"
 
 
 class FearGreedIndex(typing.NamedTuple):
-    value: int
+    value: float
     description: str
     last_update: datetime.datetime
 
@@ -40,27 +25,9 @@ class FearGreedIndex(typing.NamedTuple):
 class Fetcher:
     """Fetcher gets the HTML contents of CNN's Fear & Greed Index website."""
 
-    def __call__(self) -> str:
+    def __call__(self) -> dict:
         r = requests.get(URL)
-        return r.text
-
-
-def _parse_date(d: str) -> datetime.datetime:
-    """Parses e.g. 'Nov 27 at 5:00pm' into a datetime object."""
-
-    # The string timestamp doesn't include the year, assumed to be the current one.
-    # If the resulting datetime object refers to a point in time in the future (e.g.
-    # we parse "Dec 31 at 3:00pm" on January 1st) we need to subtract one year: the
-    # Fear & Greed index value cannot have been generated in the future, after all.
-
-    # From CNN's website: "All times are ET."
-    eastern = zoneinfo.ZoneInfo("US/Eastern")
-    now = datetime.datetime.now(tz=eastern)
-    date = datetime.datetime.strptime(d, "%b %d at %I:%M%p").replace(year=now.year)
-    date = date.replace(tzinfo=eastern)
-    if date > now:
-        date = date.replace(year=now.year - 1)
-    return date
+        return r.json()
 
 
 def get(fetcher: Fetcher = None) -> FearGreedIndex:
@@ -69,12 +36,9 @@ def get(fetcher: Fetcher = None) -> FearGreedIndex:
     if fetcher is None:
         fetcher = Fetcher()
 
-    match = re.search(REGEXP, fetcher())
-    if match:
-        group = match.group
-        return FearGreedIndex(
-            int(group("value")),
-            group("description"),
-            _parse_date(group("last_update")),
-        )
-    raise ValueError("couldn't parse {}".format(URL))
+    response = fetcher()["fear_and_greed"]
+    return FearGreedIndex(
+        value=response["score"],
+        description=response["rating"],
+        last_update=datetime.datetime.fromisoformat(response["timestamp"]),
+    )
