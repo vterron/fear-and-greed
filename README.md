@@ -20,9 +20,9 @@ Returns a three-element namedtuple with (a) the current value of the Fear & Gree
 
 ```python
 FearGreedIndex(
-    value=58,
-    description='Greed',
-    last_update=datetime.datetime(2020, 3, 18, 14, 11, tzinfo=<DstTzInfo 'US/Eastern' LMT-1 day, 19:04:00 STD>)),
+    value=31.4266,
+    description='fear',
+    last_update=datetime.datetime(2022, 4, 25, 16, 51, 9, 254000, tzinfo=datetime.timezone.utc)),
  )
 ```
 
