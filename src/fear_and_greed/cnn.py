@@ -26,7 +26,13 @@ class Fetcher:
     """Fetcher gets the HTML contents of CNN's Fear & Greed Index website."""
 
     def __call__(self) -> dict:
-        r = requests.get(URL)
+        headers = {
+            'User-Agent': 'Mozilla',
+        }
+        r = requests.get(URL, headers=headers)
+        if r.status_code != 200:
+            raise ValueError("Unexpected response code: '{status_code}', response: '{response}'".format(
+                status_code=r.status_code, response=r.text))
         return r.json()
 
 
