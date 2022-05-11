@@ -27,12 +27,10 @@ class Fetcher:
 
     def __call__(self) -> dict:
         headers = {
-            'User-Agent': 'Mozilla',
+            "User-Agent": "Mozilla",
         }
         r = requests.get(URL, headers=headers)
-        if r.status_code != 200:
-            raise ValueError("Unexpected response code: '{status_code}', response: '{response}'".format(
-                status_code=r.status_code, response=r.text))
+        r.raise_for_status()
         return r.json()
 
 
